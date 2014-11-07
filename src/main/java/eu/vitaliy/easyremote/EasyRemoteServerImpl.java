@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import java.lang.reflect.Method;
 import java.rmi.Remote;
 
-public class EasyRemoteSpringServerImpl implements EasyRemoteSpringServer, Remote, ApplicationContextAware {
+public class EasyRemoteServerImpl implements EasyRemoteServer, Remote, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
