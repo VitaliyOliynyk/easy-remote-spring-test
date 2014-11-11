@@ -13,8 +13,13 @@ public class EasyRemote {
     private static InitialContext context;
     private static ApplicationContext applicationContext;
 
-    public static  <T> T makeBean(String beanName,  Class<T> beanInterface) {
-         return makeProxyForInterface(new EasyRemoteSpringInvocationHandler(beanName, beanInterface), beanInterface);
+    public static  <T> T makeBean(String beanName,  Class<T> proxyType) {
+        if (proxyType.isInterface()) {
+            return makeProxyForInterface(new EasyRemoteSpringInvocationHandler(beanName, proxyType), proxyType);
+        } else {
+            return makeProxyForClass(new EasyRemoteSpringInvocationHandler(beanName, proxyType), proxyType);
+        }
+
     }
 
     private static ApplicationContext getApplicationContext() {
@@ -75,11 +80,11 @@ public class EasyRemote {
 
     private static  class EasyRemoteSpringInvocationHandler implements MethodHandler {
         protected String beanName;
-        protected Class beanInterface;
+        protected Class proxyType;
 
-        public EasyRemoteSpringInvocationHandler(String beanName, Class beanInterface) {
+        public EasyRemoteSpringInvocationHandler(String beanName, Class proxyType) {
             this.beanName = beanName;
-            this.beanInterface = beanInterface;
+            this.proxyType = proxyType;
         }
 
         @Override
@@ -95,7 +100,7 @@ public class EasyRemote {
 
         protected Object invokeImpl(EasyRemoteServer easyRemoteServer, Object o, Method thisMethod, Method proceed, Object[] objects) {
             System.out.println("invokeRemote");
-            return easyRemoteServer.invokeLocal(beanName, beanInterface, thisMethod.getName(), thisMethod.getParameterTypes(), objects);
+            return easyRemoteServer.invokeLocal(beanName, proxyType, thisMethod.getName(), thisMethod.getParameterTypes(), objects);
         }
     }
 }
