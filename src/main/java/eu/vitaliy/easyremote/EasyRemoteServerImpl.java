@@ -28,8 +28,7 @@ public class EasyRemoteServerImpl implements EasyRemoteServer, Remote, Applicati
         Object bean;
         bean = lookupLocal(beanName);
         Method beanMethod = bean.getClass().getMethod(methodName, methodParameterTypes);
-        Object result = beanMethod.invoke(bean, parameters);
-        return result;
+        return beanMethod.invoke(bean, parameters);
     }
 
     private Object lookupLocal(String beanName) {

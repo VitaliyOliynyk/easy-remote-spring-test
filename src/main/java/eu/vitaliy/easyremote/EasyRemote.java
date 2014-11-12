@@ -29,7 +29,7 @@ public class EasyRemote {
         return applicationContext;
     }
 
-    protected static InitialContext getContext() {
+    private static InitialContext getContext() {
         if(context == null){
             try {
                 context = new InitialContext();
@@ -41,15 +41,15 @@ public class EasyRemote {
     }
 
 
-    protected static <T> T getRemoteBean(String beanName, Class<T> beanInterface){
+    private static <T> T getRemoteBean(String beanName, Class<T> beanInterface){
         return getApplicationContext().getBean(beanName, beanInterface);
     }
 
-    public static <T> T makeProxyForInterface(MethodHandler methodHandler, Class<T> ... beanInterface){
+    private static <T> T makeProxyForInterface(MethodHandler methodHandler, Class<T> ... beanInterface){
          return makeProxyFor(methodHandler, null, beanInterface);
     }
 
-    public static <T> T makeProxyForClass(MethodHandler methodHandler, Class<T> superclass,  Class<?> ... beanInterface){
+    private static <T> T makeProxyForClass(MethodHandler methodHandler, Class<T> superclass,  Class<?> ... beanInterface){
        return makeProxyFor(methodHandler, superclass, beanInterface);
     }
 
@@ -92,10 +92,7 @@ public class EasyRemote {
             Object remoteBean = getRemoteBean("easyRemoteClient", EasyRemoteServer.class);
             EasyRemoteServer easyRemoteServer = (EasyRemoteServer) remoteBean;
             System.out.println("Method name:" + thisMethod.getName());
-
-            Object result =  invokeImpl(easyRemoteServer, o, thisMethod, proceed, objects);
-
-            return result;
+            return invokeImpl(easyRemoteServer, o, thisMethod, proceed, objects);
         }
 
         protected Object invokeImpl(EasyRemoteServer easyRemoteServer, Object o, Method thisMethod, Method proceed, Object[] objects) {

@@ -3,8 +3,8 @@ package eu.vitaliy.easyremote;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class RunServerMain {
+public class RunServerPostProcessorMain {
     public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("easy-remote-spring-test-test-context.xml");
+        new ClassPathXmlApplicationContext("easy-remote-spring-test-postprocessor-test-context.xml");
     }
 }

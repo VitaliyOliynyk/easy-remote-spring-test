@@ -8,7 +8,10 @@ import static org.fest.assertions.api.Assertions.*;
 public class EasyRemoteServerTest {
 
     @Proxy
-    private ITestBean testBean;
+    private ITestBean testBeanInterface;
+
+    @Proxy
+    private TestBean testBeanClass;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -18,13 +21,23 @@ public class EasyRemoteServerTest {
     @Test
     public void injectRemoteTest() throws Exception {
         EasyRemoteAnnotations.init(this);
-        assertThat(testBean).isNotNull();
+        assertThat(testBeanInterface).isNotNull();
+        assertThat(testBeanClass).isNotNull();
     }
 
-    @Test//(enabled = false)
-    public void remoteInvocationTest() throws Exception {
+    @Test(enabled = false)
+    public void remoteInvocationInterfaceTest() throws Exception {
         //when
-        String testResult = testBean.test();
+        String testResult = testBeanInterface.test();
+
+        //then
+        assertThat(testResult).isEqualTo(ITestBean.TEST);
+    }
+
+    @Test(enabled = false)
+    public void remoteInvocationClassTest() throws Exception {
+        //when
+        String testResult = testBeanClass.test();
 
         //then
         assertThat(testResult).isEqualTo(ITestBean.TEST);

@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-       <import resource="easy-remote-spring-test-context.xml"/>
+       <bean class="eu.vitaliy.easyremote.EasyRemoteBeanFactoryPostProcessor"/>
        <bean id="testBeanInterface" class="eu.vitaliy.easyremote.TestBean"/>
        <bean id="testBeanClass" class="eu.vitaliy.easyremote.TestBean"/>
 </beans>
