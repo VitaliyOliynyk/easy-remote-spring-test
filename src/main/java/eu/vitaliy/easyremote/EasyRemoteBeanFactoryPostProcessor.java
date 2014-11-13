@@ -17,6 +17,10 @@ public class EasyRemoteBeanFactoryPostProcessor implements BeanDefinitionRegistr
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
+        if (beanDefinitionRegistry.containsBeanDefinition(EASY_REMOTE_SERVER_BEAN_NAME)) {
+            return;
+        }
+
         RootBeanDefinition beanDef = new RootBeanDefinition(EasyRemoteServerImpl.class);
         beanDefinitionRegistry.registerBeanDefinition(EASY_REMOTE_SERVER_BEAN_NAME, beanDef);
 

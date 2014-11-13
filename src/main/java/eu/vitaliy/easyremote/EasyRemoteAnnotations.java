@@ -1,7 +1,5 @@
 package eu.vitaliy.easyremote;
 
-import org.mockito.MockitoAnnotations;
-
 import java.lang.reflect.Field;
 
 public class EasyRemoteAnnotations {
@@ -15,7 +13,6 @@ public class EasyRemoteAnnotations {
     }
 
     public static void initImpl(Object target) throws IllegalAccessException {
-        MockitoAnnotations.initMocks(target);
         Field[] fields = target.getClass().getDeclaredFields();
         for (Field field : fields) {
             if (field.isAnnotationPresent(Proxy.class)) {

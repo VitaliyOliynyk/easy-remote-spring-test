@@ -6,7 +6,7 @@
     <bean id="easyRemoteClient" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         <property name="serviceInterface" value="eu.vitaliy.easyremote.EasyRemoteServer"/>
         <property name="serviceUrl" value="rmi://localhost:11199/EasyRemoteServer"/>
+        <property name="refreshStubOnConnectFailure" value="true" />
     </bean>
 
-    <bean class="eu.vitaliy.easyremote.EasyRemoteBeanFactoryPostProcessor"/>
 </beans>

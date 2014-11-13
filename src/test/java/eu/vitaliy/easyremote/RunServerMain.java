@@ -1,10 +1,7 @@
 package eu.vitaliy.easyremote;
 
-
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 public class RunServerMain {
     public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("easy-remote-spring-test-test-context.xml");
+        TestServer.run("easy-remote-spring-test-test-context.xml");
     }
 }

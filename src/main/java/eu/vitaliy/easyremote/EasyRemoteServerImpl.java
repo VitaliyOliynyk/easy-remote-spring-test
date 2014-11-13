@@ -25,8 +25,7 @@ public class EasyRemoteServerImpl implements EasyRemoteServer, Remote, Applicati
     }
 
     private Object invokeImpl(String beanName, Class beanInterface, String methodName, Class[] methodParameterTypes, Object[] parameters) throws Exception {
-        Object bean;
-        bean = lookupLocal(beanName);
+        Object bean = lookupLocal(beanName);
         Method beanMethod = bean.getClass().getMethod(methodName, methodParameterTypes);
         return beanMethod.invoke(bean, parameters);
     }
