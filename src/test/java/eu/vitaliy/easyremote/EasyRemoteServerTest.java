@@ -1,6 +1,7 @@
 package eu.vitaliy.easyremote;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.Callable;
@@ -19,8 +20,7 @@ public class EasyRemoteServerTest {
 
     @BeforeClass
     public void setUp() throws Throwable {
-        assertThat(startServer()).as("Server is not started").isTrue();
-        EasyRemoteAnnotations.init(this);
+       EasyRemoteAnnotations.init(this);
     }
 
     @Test
@@ -30,30 +30,40 @@ public class EasyRemoteServerTest {
         assertThat(testBeanClass).isNotNull();
     }
 
-    @Test
-    public void remoteInvocationInterfaceTest() throws Exception {
+    @Test(dataProvider = "remoteInvocationTestData")
+    public void remoteInvocationTest(String contextXmlFile) throws Throwable {
+        //given
+        assertThat(startServer(contextXmlFile)).as("Server is not started").isTrue();
+
+        //when then
+        checkBean(testBeanClass);
+        checkBean(testBeanInterface);
+    }
+
+    private void checkBean(ITestBean testBean) {
         //when
-        String testResult = testBeanInterface.test();
+        String testResult = testBean.test();
 
         //then
         assertThat(testResult).isEqualTo(ITestBean.TEST);
     }
 
-    @Test
-    public void remoteInvocationClassTest() throws Exception {
-        //when
-        String testResult = testBeanClass.test();
+    @DataProvider(name = "remoteInvocationTestData")
+	Object[][] remoteInvocationTestData() {
+		EasyRemoteAnnotations.init(this);
+		return new Object[][] {
+                new Object[] { "easy-remote-spring-test-test-context.xml" },
+				new Object[] { "easy-remote-spring-test-postprocessor-test-context.xml" },
+				new Object[] { "easy-remote-spring-test-schema-test-context.xml" },
+        };
+	}
 
-        //then
-        assertThat(testResult).isEqualTo(ITestBean.TEST);
-    }
-
-    private boolean startServer() throws Throwable {
+    private boolean startServer(final String contextXmlFile) throws Throwable {
         return  Executors.newSingleThreadExecutor().submit(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 try {
-                    RunServerSchemaMain.main(null);
+                    TestServer.run(contextXmlFile);
                     return true;
                 } catch (Throwable e) {
                     e.printStackTrace();
