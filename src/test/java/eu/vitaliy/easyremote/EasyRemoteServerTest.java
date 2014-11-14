@@ -53,7 +53,7 @@ public class EasyRemoteServerTest {
             @Override
             public Boolean call() throws Exception {
                 try {
-                    RunServerMain.main(null);
+                    RunServerSchemaMain.main(null);
                     return true;
                 } catch (Throwable e) {
                     e.printStackTrace();

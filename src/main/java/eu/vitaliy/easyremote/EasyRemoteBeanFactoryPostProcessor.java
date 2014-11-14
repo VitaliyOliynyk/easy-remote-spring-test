@@ -17,24 +17,7 @@ public class EasyRemoteBeanFactoryPostProcessor implements BeanDefinitionRegistr
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        if (beanDefinitionRegistry.containsBeanDefinition(EASY_REMOTE_SERVER_BEAN_NAME)) {
-            return;
-        }
-
-        RootBeanDefinition beanDef = new RootBeanDefinition(EasyRemoteServerImpl.class);
-        beanDefinitionRegistry.registerBeanDefinition(EASY_REMOTE_SERVER_BEAN_NAME, beanDef);
-
-        beanDef = new RootBeanDefinition(RmiServiceExporter.class);
-        beanDef.setScope(BeanDefinition.SCOPE_SINGLETON);
-
-        MutablePropertyValues mpv = new MutablePropertyValues();
-
-        mpv.addPropertyValue("serviceName", "EasyRemoteServer");
-        mpv.addPropertyValue("service", new RuntimeBeanReference(EASY_REMOTE_SERVER_BEAN_NAME));
-        mpv.addPropertyValue("serviceInterface", EasyRemoteServer.class.getName());
-        mpv.addPropertyValue("registryPort", "11199");
-        beanDef.setPropertyValues(mpv);
-        beanDefinitionRegistry.registerBeanDefinition("easyRemoteServerRmiServiceExporter", beanDef);
+        new EasyRemoteBeanDefinition().registerEasyRemoteBeanDefinition(beanDefinitionRegistry);
     }
 
     @Override
