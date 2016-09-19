@@ -19,7 +19,7 @@ mvn install
 </dependency>
 
 ```
-- Step 3 - add configurations tp spring context
+- Step 3 - add configurations to spring context
 ```xml
 <bean class="eu.vitaliy.easyremote.EasyRemoteBeanFactoryPostProcessor"/>
 ```
