@@ -4,13 +4,7 @@ Welcome to "Easy remote spring test" project
 
 Quick start
 ===========
--   Step 1 - clone and install the easy-remote-spring-test git repository: 
-```bash
-git clone git@github.com:VitaliyOliynyk/easy-remote-spring-test.git
-cd easy-remote-spring-test
-mvn install
-```
--   Step 2 - add maven dependency:
+-   Step 1 - add maven dependency:
 ```xml
 <dependency>
     <groupId>eu.vitaliy</groupId>
@@ -19,12 +13,12 @@ mvn install
 </dependency>
 
 ```
-- Step 3 - add configurations to spring context
+- Step 2 - add configurations to spring context
 ```xml
 <bean class="eu.vitaliy.easyremote.EasyRemoteBeanFactoryPostProcessor"/>
 ```
-- Step 4 - Run Your App
-- Step 5 - Write integration test, use it like this: 
+- Step 3 - Run Your App
+- Step 4 - Write integration test, use it like this:
 ```java
 import eu.vitaliy.easyremote.EasyRemoteAnnotations;
 import eu.vitaliy.easyremote.Proxy;
