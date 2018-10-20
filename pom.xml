@@ -4,7 +4,7 @@
 
     <groupId>eu.vitaliy</groupId>
     <artifactId>easy-remote-spring-test</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Easy remote spring test</name>
 
     <url>https://github.com/VitaliyOliynyk/easy-remote-spring-test</url>
@@ -24,7 +24,7 @@
     <scm>
         <url>scm:git:git@github.com:VitaliyOliynyk/easy-remote-spring-test.git</url>
         <connection>scm:git:git@github.com:VitaliyOliynyk/easy-remote-spring-test.git</connection>
-      <tag>easy-remote-spring-test-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
