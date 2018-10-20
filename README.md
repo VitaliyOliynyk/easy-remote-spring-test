@@ -9,7 +9,7 @@ Quick start
 <dependency>
     <groupId>eu.vitaliy</groupId>
     <artifactId>easy-remote-spring-test</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 </dependency>
 
 ```
