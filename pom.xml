@@ -24,8 +24,8 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/VitaliyOliynyk/easy-remote-spring-test.git</url>
-        <connection>https://github.com/VitaliyOliynyk/easy-remote-spring-test.git</connection>
+        <url>scm:git:https://github.com/VitaliyOliynyk/easy-remote-spring-test.git</url>
+        <connection>scm:git:https://github.com/VitaliyOliynyk/easy-remote-spring-test.git</connection>
     </scm>
 
     <developers>
