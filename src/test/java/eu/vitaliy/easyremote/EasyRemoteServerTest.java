@@ -45,12 +45,32 @@ public class EasyRemoteServerTest {
         checkBean(testBeanInterface);
     }
 
+    @Test(dataProvider = "remoteInvocationTestData")
+    public void remoteInvocationArrayResultTest(String contextXmlFile) throws Throwable {
+        //given
+        assertThat(startServer(contextXmlFile)).as("Server is not started").isTrue();
+
+        //when then
+        checkArrayResult(testBeanClass);
+//        checkArrayResult(testBeanInterface);
+    }
+
     private void checkBean(ITestBean testBean) {
         //when
-        Result testResult = testBean.test(new Param(new ParamNested(new ParamNestedNested(ITestBean.TEST))));
+        Result testResult = testBean.test(new Param(new ParamNested(new ParamNestedNested(ITestBean.TEST_STRING))));
 
         //then
-        assertThat(testResult.getParamNested().getParamNestedNested().getValue()).isEqualTo(ITestBean.TEST);
+        assertThat(testResult.getParamNested().getParamNestedNested().getValue()).isEqualTo(ITestBean.TEST_STRING);
+    }
+
+    private void checkArrayResult(ITestBean testBean) {
+        //when
+        Object[] result = testBean.testArray(new Param(new ParamNested(new ParamNestedNested(ITestBean.TEST_STRING))), 3);
+
+        //then
+        assertThat(((Result)result[0]).getParamNested().getParamNestedNested().getValue()).isEqualTo(ITestBean.TEST_STRING);
+        assertThat(result[1]).isEqualTo(ITestBean.TEST_STRING);
+        assertThat(result[2]).isEqualTo(ITestBean.TEST_INT);
     }
 
     @DataProvider(name = "remoteInvocationTestData")

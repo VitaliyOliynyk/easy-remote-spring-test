@@ -36,9 +36,6 @@ public class Marshaler {
 
     private static XStream createXStream(Class<?>[] parameterTypes) {
         XStream xStream = new XStream(new DomDriver());
-        for (Class<?> parameterType : parameterTypes) {
-            xStream.alias(parameterType.getName(), parameterType);
-        }
 
         xStream .addPermission(NoTypePermission.NONE); //forbid everything
         xStream .addPermission(NullPermission.NULL);   // allow "null"
