@@ -1,5 +1,6 @@
 package eu.vitaliy.easyremote;
 
+import eu.vitaliy.easyremote.marshal.Marshaler;
 import javassist.util.proxy.MethodFilter;
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
@@ -49,10 +50,6 @@ public class EasyRemote {
        return makeProxyFor(methodHandler, superclass, beanInterface);
     }
 
-    /*
-    * //factory.setHandler(methodHandler);
-    * ((ProxyObject) instance ).setHandler(methodHandler);  //(instead deprecated)
-    */
     private static <T> T makeProxyFor(MethodHandler methodHandler, Class<T> superclass,  Class<?> ... beanInterface){
 
         ProxyFactory factory = new ProxyFactory();
@@ -94,16 +91,19 @@ public class EasyRemote {
 
         @Override
         public Object invoke(Object o, Method thisMethod, Method proceed, Object[] objects) throws Throwable {
-            Object remoteBean = getEasyRemoteServer();
-            EasyRemoteServer easyRemoteServer = (EasyRemoteServer) remoteBean;
+            EasyRemoteServer easyRemoteServer = getEasyRemoteServer();
 
             System.out.println("Method name:" + thisMethod.getName());
-            return invokeImpl(easyRemoteServer, o, thisMethod, proceed, objects);
+            String marshalazed = (String) invokeImpl(easyRemoteServer, o, thisMethod, proceed, objects);
+            Object unmarshalazed = Marshaler.unmarshal(thisMethod.getReturnType(), marshalazed);
+            return unmarshalazed;
         }
 
         protected Object invokeImpl(EasyRemoteServer easyRemoteServer, Object o, Method thisMethod, Method proceed, Object[] objects) {
             System.out.println("invokeRemote");
-            return easyRemoteServer.invokeLocal(beanName, proxyType, thisMethod.getName(), thisMethod.getParameterTypes(), objects);
+            String marshaledParameters = marshaledParameters = Marshaler.marshal(thisMethod.getParameterTypes(), objects);
+            return easyRemoteServer.invokeLocal(beanName, proxyType, thisMethod.getName(), thisMethod.getParameterTypes(), marshaledParameters);
         }
+
     }
 }

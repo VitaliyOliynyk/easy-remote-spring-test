@@ -1,5 +1,9 @@
 package eu.vitaliy.easyremote;
 
+import eu.vitaliy.easyremote.dto.param.Param;
+import eu.vitaliy.easyremote.dto.param.ParamNested;
+import eu.vitaliy.easyremote.dto.param.ParamNestedNested;
+import eu.vitaliy.easyremote.dto.result.Result;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -43,10 +47,10 @@ public class EasyRemoteServerTest {
 
     private void checkBean(ITestBean testBean) {
         //when
-        String testResult = testBean.test();
+        Result testResult = testBean.test(new Param(new ParamNested(new ParamNestedNested(ITestBean.TEST))));
 
         //then
-        assertThat(testResult).isEqualTo(ITestBean.TEST);
+        assertThat(testResult.getParamNested().getParamNestedNested().getValue()).isEqualTo(ITestBean.TEST);
     }
 
     @DataProvider(name = "remoteInvocationTestData")
