@@ -71,12 +71,13 @@ public class EasyRemote {
         if(beanInterface != null && beanInterface.length > 0){
             factory.setInterfaces(beanInterface);
         }
-        factory.setHandler(methodHandler);
 
-        Class<T> proxyClass = factory.createClass();
+        Class<T> proxyClass = (Class<T>) factory.createClass();
 
         try {
-            return proxyClass.newInstance();
+            T proxy = proxyClass.newInstance();
+            ((javassist.util.proxy.Proxy)proxy).setHandler(methodHandler);
+            return proxy;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

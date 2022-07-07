@@ -7,7 +7,8 @@ import org.testng.annotations.Test;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 // -Djava.security.policy=D:\Rus-My-documents\idea-projects\easy-remote-spring-test\src\main\resources\client.policy
 public class EasyRemoteServerTest {
