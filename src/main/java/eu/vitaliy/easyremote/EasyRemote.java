@@ -1,6 +1,7 @@
 package eu.vitaliy.easyremote;
 
 import eu.vitaliy.easyremote.marshal.Marshaler;
+import eu.vitaliy.easyremote.tx.TransactionAttribute;
 import javassist.util.proxy.MethodFilter;
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
@@ -15,11 +16,11 @@ public class EasyRemote {
     private static ApplicationContext applicationContext;
     private static EasyRemoteServer easyRemoteServer;
 
-    public static  <T> T makeBean(String beanName,  Class<T> proxyType) {
+    public static  <T> T makeBean(String beanName, Class<T> proxyType, TransactionAttribute transactionAttribute) {
         if (proxyType.isInterface()) {
-            return makeProxyForInterface(new EasyRemoteSpringInvocationHandler(beanName, proxyType), proxyType);
+            return makeProxyForInterface(new EasyRemoteSpringInvocationHandler(beanName, proxyType, transactionAttribute), proxyType);
         } else {
-            return makeProxyForClass(new EasyRemoteSpringInvocationHandler(beanName, proxyType), proxyType);
+            return makeProxyForClass(new EasyRemoteSpringInvocationHandler(beanName, proxyType, transactionAttribute), proxyType);
         }
 
     }
@@ -83,10 +84,12 @@ public class EasyRemote {
     private static  class EasyRemoteSpringInvocationHandler implements MethodHandler {
         protected String beanName;
         protected Class proxyType;
+        protected TransactionAttribute transactionAttribute;
 
-        public EasyRemoteSpringInvocationHandler(String beanName, Class proxyType) {
+        public EasyRemoteSpringInvocationHandler(String beanName, Class proxyType, TransactionAttribute transactionAttribute) {
             this.beanName = beanName;
             this.proxyType = proxyType;
+            this.transactionAttribute = transactionAttribute;
         }
 
         @Override
@@ -102,7 +105,7 @@ public class EasyRemote {
         protected Object invokeImpl(EasyRemoteServer easyRemoteServer, Object o, Method thisMethod, Method proceed, Object[] objects) {
             System.out.println("invokeRemote");
             String marshaledParameters = marshaledParameters = Marshaler.marshal(thisMethod.getParameterTypes(), objects);
-            return easyRemoteServer.invokeLocal(beanName, proxyType, thisMethod.getName(), thisMethod.getParameterTypes(), marshaledParameters);
+            return easyRemoteServer.invokeLocal(beanName, proxyType, thisMethod.getName(), thisMethod.getParameterTypes(), marshaledParameters, transactionAttribute);
         }
 
     }

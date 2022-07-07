@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // -Djava.security.policy=D:\Rus-My-documents\idea-projects\easy-remote-spring-test\src\main\resources\client.policy
 public class EasyRemoteServerTest {
 
-    @Proxy
+    @Proxy(transactional = true)
     private ITestBean testBeanInterface;
 
     @Proxy
@@ -52,7 +52,7 @@ public class EasyRemoteServerTest {
 
         //when then
         checkArrayResult(testBeanClass);
-//        checkArrayResult(testBeanInterface);
+        checkArrayResult(testBeanInterface);
     }
 
     private void checkBean(ITestBean testBean) {

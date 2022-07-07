@@ -4,7 +4,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://vitaliy.eu/schema/easy-remote-test/ert http://vitaliy.eu/schema/easy-remote-test/ert.xsd">
-
+       <import resource="tx.xml"/>
        <ert:configure/>
        <bean id="testBeanInterface" class="eu.vitaliy.easyremote.TestBean"/>
        <bean id="testBeanClass" class="eu.vitaliy.easyremote.TestBean"/>

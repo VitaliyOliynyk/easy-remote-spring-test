@@ -8,4 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Proxy {
+    boolean transactional() default false;
+    String transactionManager() default "transactionManager";
+    boolean rollback() default false;
 }

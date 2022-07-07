@@ -1,5 +1,7 @@
 package eu.vitaliy.easyremote;
 
+import eu.vitaliy.easyremote.tx.TransactionAttribute;
+
 import java.lang.reflect.Field;
 
 public class EasyRemoteAnnotations {
@@ -19,9 +21,13 @@ public class EasyRemoteAnnotations {
                 String beanName = field.getName();
                 Class fieldType = field.getType();
                 field.setAccessible(true);
-                Object bean = EasyRemote.makeBean(beanName, fieldType);
+                Object bean = EasyRemote.makeBean(beanName, fieldType, createTransactionAttribute(field.getAnnotation(Proxy.class)));
                 field.set(target, bean);
             }
         }
+    }
+
+    private static TransactionAttribute createTransactionAttribute(Proxy proxyAnnotation) {
+        return new TransactionAttribute(proxyAnnotation.transactional(), proxyAnnotation.transactionManager(), proxyAnnotation.rollback());
     }
 }
