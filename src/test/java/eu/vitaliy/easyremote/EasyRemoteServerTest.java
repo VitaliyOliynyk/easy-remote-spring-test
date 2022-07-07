@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // -Djava.security.policy=D:\Rus-My-documents\idea-projects\easy-remote-spring-test\src\main\resources\client.policy
 public class EasyRemoteServerTest {
 
-    @Proxy(transactional = true)
+    @Proxy(transactional = true, rollback = true)
     private ITestBean testBeanInterface;
 
     @Proxy

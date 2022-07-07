@@ -24,14 +24,14 @@ public class Marshaler {
 
     public static Object[] unmarshal(Class<?>[] parameterTypes, String marshalazed) {
         XStream xStream = createXStream(parameterTypes);
-        Object[] unmarshalazed = (Object[]) xStream.fromXML(marshalazed);
-        return unmarshalazed;
+        Object[] unmarshalled = (Object[]) xStream.fromXML(marshalazed);
+        return unmarshalled;
     }
 
     public static Object unmarshal(Class<?>parameterType, String marshalazed) {
         XStream xStream = createXStream(new Class<?>[]{parameterType});
-        Object unmarshalazed = xStream.fromXML(marshalazed);
-        return unmarshalazed;
+        Object unmarshalled = xStream.fromXML(marshalazed);
+        return unmarshalled;
     }
 
     private static XStream createXStream(Class<?>[] parameterTypes) {

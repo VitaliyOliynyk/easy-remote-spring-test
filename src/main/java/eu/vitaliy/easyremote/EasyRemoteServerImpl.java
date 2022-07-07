@@ -35,16 +35,16 @@ public class EasyRemoteServerImpl implements EasyRemoteServer, Remote, Applicati
     private Object invokeImpl(String beanName, Class beanInterface, String methodName, Class[] methodParameterTypes, String marshaledParameters, TransactionAttribute transactionAttribute) throws Exception {
         Object bean = lookupLocal(beanName);
         Method beanMethod = bean.getClass().getMethod(methodName, methodParameterTypes);
-        Object[] unmarshalazedParams = Marshaler.unmarshal(methodParameterTypes, marshaledParameters);
-        Object result = invokeBeanMethod(bean, beanMethod, unmarshalazedParams, transactionAttribute);
+        Object[] unmarshalledParams = Marshaler.unmarshal(methodParameterTypes, marshaledParameters);
+        Object result = invokeBeanMethod(bean, beanMethod, unmarshalledParams, transactionAttribute);
 
         String marshaled = Marshaler.marshal(beanMethod.getReturnType(), result);
         return marshaled;
     }
 
-    private Object invokeBeanMethod(Object bean, Method beanMethod, Object[] unmarshalazedParams, TransactionAttribute transactionAttribute) throws IllegalAccessException, InvocationTargetException {
+    private Object invokeBeanMethod(Object bean, Method beanMethod, Object[] unmarshalledParams, TransactionAttribute transactionAttribute) throws IllegalAccessException, InvocationTargetException {
         Supplier<Object> supplierResult = () -> wrapException(() -> {
-            return beanMethod.invoke(bean, unmarshalazedParams);
+            return beanMethod.invoke(bean, unmarshalledParams);
         });
 
         if (transactionAttribute.isTransactional()) {

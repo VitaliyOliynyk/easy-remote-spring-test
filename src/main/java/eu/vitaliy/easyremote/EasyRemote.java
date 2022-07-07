@@ -98,8 +98,8 @@ public class EasyRemote {
 
             System.out.println("Method name:" + thisMethod.getName());
             String marshalazed = (String) invokeImpl(easyRemoteServer, o, thisMethod, proceed, objects);
-            Object unmarshalazed = Marshaler.unmarshal(thisMethod.getReturnType(), marshalazed);
-            return unmarshalazed;
+            Object unmarshalled = Marshaler.unmarshal(thisMethod.getReturnType(), marshalazed);
+            return unmarshalled;
         }
 
         protected Object invokeImpl(EasyRemoteServer easyRemoteServer, Object o, Method thisMethod, Method proceed, Object[] objects) {
